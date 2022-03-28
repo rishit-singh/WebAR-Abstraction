@@ -1,0 +1,3 @@
+[submodule "webxr-samples"]
+	path = webxr-samples
+	url = https://github.com/immersive-web/webxr-samples
