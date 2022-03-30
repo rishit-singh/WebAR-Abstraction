@@ -36,50 +36,110 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             Canvas = null,
             Renderer = null,
             Camera = null,
-            ReferenceSpace = null;
+            ReferenceSpace = null,
+            GlobalScene = null;
 
         let xrSession = GetWebXRInstance();
+
+        function onXRFrame(time, frame) {
+            xrSession.requestAnimationFrame(onXRFrame);
+
+            GLContext.bindFrameBuffer(GLContext.FRAMEBUFFER, xrSession.renderState.baseLayer.frameBuffer);
+            Renderer.setFrameBuffer(xrSession.renderState.baseLayer.frameBuffer);
+
+            var pose = frame.getViewerPose(ReferenceSpace);
+
+            if (pose)
+            {
+                var view = pose.views[0];
+                var viewPort = xrSession.renderState.baseLayer.getViewPort(view);
+
+                Renderer.setSize(viewPort.width, viewPort.height);
+
+                Camera.matrix.fromArray(view.transform.matrix);
+                Camera.projectionMatrix.fromArray(view.projectionMatrix);
+                Camera.updateMatrixWorld(true);
+
+                Renderer.render(GlobalScene, Camera);
+            }
+        }
+
+
+        async function CheckSupport()
+        {
+            if (navigator.xr && await navigator.xr.isSessionSupported("immersive-ar"))
+            {
+              alert("supported");
+
+              return true;
+            }
+            else
+            {
+              alert("not supported");
+
+              return false;
+            }
+        }
+
+        async function ActivateXR()
+        {
+            if (!CheckSupport())
+              return;
+
+            xrSession = await navigator.xr.requestSession("immersive-ar");
+
+            if (!xrSession)
+              alert("xrSession creation failed.");
+
+            await Start();
+        }
 
         async function Start()
         {
             Canvas = GetCanvas();
             GLContext = Canvas.getContext("webgl", {xrCompatible: true});
-            (Renderer = new THREE.WebGLRenderer({
-                    alpha: true,
-                    preserveDrawingBuffer: true,
-                    canvas: Canvas,
-                    context: GLContext
-            })).autoClear = false;
+
+            xrSession.updateRenderState({
+                 baseLayer: new XRWebGLLayer(xrSession, GLContext)
+               });
+
+            Renderer = GetRenderer(Canvas, GLContext);
 
             Camera = GetCameraInstance();
+            GlobalScene = Get3DScene();
 
             //xrSession = GetWebXRInstance();
+
+            ReferenceSpace = await navigator.xr.requestReferenceSpace("local");
+
+            xrSession.requestAnimationFrame(onXRFrame);
 
             if ("xr" in window.navigator)
               alert("supported");
             else
               alert("not supported");
 
+
             try
             {
-              navigator.xr.isSessionSupported("immersive-ar").then((supported) => {
-                  if (supported)
-                    navigator.xr.requestSession("immersive-ar").then((session) => {
-                        xrSession = session;
-                        xrSession.updateRenderState({ baseLayer : new XRWebGLLayer(xrSession, GLContext) });
-
-                        xrSession.requestReferenceSpace("local").then((refSpace) => {
-                            ReferenceSpace = refSpace;
-                        });
-
-                      xrSession.requestAnimationFrame(Render);
-                    });
-                  else
-                    throw "Not supported.";
-              });
-
-
-              alert("success");
+              // navigator.xr.isSessionSupported("immersive-ar").then((supported) => {
+              //     if (supported)
+              //       navigator.xr.requestSession("immersive-ar").then((session) => {
+              //           xrSession = session;
+              //           xrSession.updateRenderState({ baseLayer : new XRWebGLLayer(xrSession, GLContext) });
+              //
+              //           xrSession.requestReferenceSpace("local").then((refSpace) => {
+              //               ReferenceSpace = refSpace;
+              //           });
+              //
+              //         xrSession.requestAnimationFrame(Render);
+              //       });
+              //     else
+              //       throw "Not supported.";
+              // });
+              //
+              //
+              // alert("success");
             }
             catch (e)
             {
@@ -118,6 +178,22 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
         }
 
+        function GetRenderer(canvasObject, glContext)
+        {
+            var renderer = new THREE.WebGLRenderer(
+              {
+                alpha: true,
+                preserveDrawingBuffer: true,
+                canvas: canvasObject,
+                context: glContext
+              }
+            );
+
+          renderer.autoClear = false;
+
+          return renderer;
+        }
+     
         async function GetWebXRInstance()
         {
             var supported = await navigator.xr.isSessionSupported("immersive-ar");
@@ -134,14 +210,14 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         {
             var camera = new THREE.PerspectiveCamera();
 
-            camera.matrixAutoUpdate = false;
+          camera.matrixAutoUpdate = false;
 
             return camera;
         }
 
         function Get3DScene()
         {
-            const scene = new THREE.Scene();
+          const scene = new THREE.Scene();
 
             // The cube will have a different color on each side.
             const materials = [
@@ -161,27 +237,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             return scene;
         }
 
-        function Render(time, frame)
-        {
-            xrSession.requestAnimationFrame(Render);
-
-            GLContext.bindFrameBuffer(GLContext.FRAMEBUFFER, xrSession.renderState.baseLayer.frameBuffer);
-
-            var pose = frame.getViewerPose(ReferenceSpace);
-
-            if (pose)
-            {
-                var view = pose.views[0];
-
-                var viewPort = xrSession.renderState.baseLayer.getViewPort();
-
-                Camera.matrix.fromArray(view.transform.matrix);
-                Camera.projectionMatrix.fromArray(view.transform.matrix);
-                Camera.updateMatrixWorld(true);
-
-                Renderer.render(GetScene(), Camera);
-            }
-        }
 
         function GetCanvas()
         {
@@ -192,9 +247,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
           return canvas;
         }
 
-        xrSession.onSessionStarted = Start;
-
-        Start();
+        ActivateXR();
     </script>
   </head>
   <body>
