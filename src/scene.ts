@@ -1,7 +1,6 @@
 import { createPlaneMarker } from "./objects/PlaneMarker";
 import { GLTF, GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { handleXRHitTest } from "./utils/hitTest";
-
 import {
   AmbientLight,
   Mesh,
@@ -10,6 +9,9 @@ import {
   Scene,
   WebGLRenderer,
   XRFrame,
+  PlaneGeometry,
+  MeshBasicMaterial,
+  TextureLoader
 } from "three";
 
 
@@ -48,6 +50,54 @@ import {
 
 // Custom 3D model augmentation
 
+class Point2D
+{
+  public X: number;
+  public Y: number;
+
+  public constructor(x: number, y: number)
+  {
+    this.X  = x;
+    this.Y = y;
+  }
+}
+
+
+class Plane
+{
+    private Geometry: PlaneGeometry;
+
+    public Texture: MeshBasicMaterial;
+
+    public GeometryMesh: Mesh;
+
+    /*
+     * Loads a texture from the provided file path
+     */
+    private LoadTexture(filePath: string)
+    {
+      var textureLoader: TextureLoader = new TextureLoader();
+
+      this.Texture = new MeshBasicMaterial({
+        map: textureLoader.load(filePath)
+      });
+
+      return this.Texture;
+    }
+
+    public GetMesh(): Mesh
+    {
+      return (this.GeometryMesh = new Mesh(this.Geometry, this.Texture));
+    }
+
+    public constructor(dimensions: Point2D, texturePath: string)
+    {
+      this.Geometry = new PlaneGeometry(dimensions.X, dimensions.Y);
+      this.Texture = this.LoadTexture(texturePath);
+      this.GeometryMesh = this.GetMesh();
+    }
+}
+
 export function createScene(renderer: WebGLRenderer) {
   const scene = new Scene();
 
@@ -78,7 +128,7 @@ export function createScene(renderer: WebGLRenderer) {
   /**
    * Create the plane marker to show on tracked surfaces.
    */
-  const planeMarker: Mesh = createPlaneMarker();
+  const planeMarker: Mesh = new Plane(new Point2D(1, 2),"../dist/assets/rug.jpg").GeometryMesh;
   scene.add(planeMarker);
 
   /**
