@@ -1,23 +1,26 @@
-# Building an augmented reality application with the WebXR Device API
+# Web AR Boilerplate
 
-This code has the resources you need for the codelab [Building an augmented reality application with the WebXR Device API](https://codelabs.developers.google.com/ar-with-webxr/#0).
+This is the project repository for the Medium post "Develop your first Web AR app using WebXR and three.js".
 
-This is a work in progress. If you find a mistake or have a suggestion, please [file an issue](https://github.com/googlecodelabs/ar-with-webxr/issues). Thanks!
+The `master` branch contains the project starter code, which is intended for use together with the written guide in the post.
 
-## What you'll learn
+The `production` branch contains the full completed project code, with some added comments to explain key points.
 
-* How to use the WebXR Device API
-* How to find a surface using augmented reality hit tests
-* How to load and render a 3D model synchronized with the real world camera feed
+## Demo
 
-## What you'll need
+<img src="demo/demo.gif" width="240" height="520">
 
-* A workstation for coding and hosting static web content
-* [ARCore-capable Android device](https://developers.google.com/ar/discover/#supported_devices)
-* ARCore installed (Chrome will automatically prompt you to install ARCore)
-* [Google Chrome](https://www.google.com/chrome/)
-* [Web Server for Chrome](https://chrome.google.com/webstore/detail/web-server-for-chrome/ofhbbkphhbklhfoeikjpcbhemlocgigb), or your own web server of choice
-* USB cable to connect your AR device to workstation
-* [The sample code](https://github.com/googlecodelabs/ar-with-webxr/archive/refs/heads/master.zip)
-* A text editor
-* Basic knowledge of HTML, CSS, JavaScript, and Chrome DevTools
+## Running the app
+
+To get up and running, clone the repo and run the following commands to install dependencies and start the app using [localtunnel](https://github.com/localtunnel/localtunnel).
+
+    npm install
+    npm run start:live
+
+This will install the app dependencies, start an instance of webpack-dev-server and expose the local web server to the internet using. The localtunnel URL will be printed to your terminal.
+
+## A note on debugging
+
+ For development and debugging, attach the device to your machine using a cable and access the url `chrome://inspect/#devices` in your desktop version of Chrome. Allow debug access when prompted on your device. You should then be able to see your device appear in the inspection window you opened earlier, where you can use the `inspect` functionality to get access to the running app instance for debugging.
+
+ [Remote debug Android devices](https://developer.chrome.com/docs/devtools/remote-debugging/)
