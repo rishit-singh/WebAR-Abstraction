@@ -177,7 +177,7 @@ export function createScene(renderer: WebGLRenderer) {
    * Called whenever the hit test is empty/unsuccesful.
    */
   function onHitTestResultEmpty() {
-    planeMarker.visible = true;
+    planeMarker.visible = false;
   }
 
   /**
@@ -187,20 +187,18 @@ export function createScene(renderer: WebGLRenderer) {
    * whenever anything changes.
    */
   const renderLoop = (timestamp: any, frame?: XRFrame) => {
-    /////////////////////////////////////
-    // if (renderer.xr.isPresenting) { //
-    //   if (frame) {                  //
-    //     handleXRHitTest(            //
-    //       renderer,                 //
-    //       frame,                    //
-    //       onHitTestResultReady,     //
-    //       onHitTestResultEmpty,     //
-    //     );                          //
-    //   }                             //
-    /////////////////////////////////////
-
+    if (renderer.xr.isPresenting) {
+      if (frame) {
+        handleXRHitTest(
+          renderer,
+          frame,
+          onHitTestResultReady,
+          onHitTestResultEmpty,
+        );
+      }
       renderer.render(scene, camera);
     };
 
-  renderer.setAnimationLoop(renderLoop);
+    renderer.setAnimationLoop(renderLoop);
+  }
 }
