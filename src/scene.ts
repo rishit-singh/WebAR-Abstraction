@@ -166,8 +166,10 @@ export function createScene(renderer: WebGLRenderer) {
   /**
    * Called whenever a new hit test result is ready.
    */
-  function onHitTestResultReady(hitPoseTransformed: Float32Array) {
-    if (hitPoseTransformed) {
+  function onHitTestResultReady(hitPoseTransformed: Float32Array)
+  {
+    if (hitPoseTransformed)
+    {
       planeCircle.visible = true;
       planeCircle.matrix.fromArray(hitPoseTransformed);
     }
@@ -188,14 +190,14 @@ export function createScene(renderer: WebGLRenderer) {
    */
   const renderLoop = (timestamp: any, frame?: XRFrame) => {
     if (renderer.xr.isPresenting) {
-      if (frame) {
-        handleXRHitTest(
-          renderer,
-          frame,
-          onHitTestResultReady,
-          onHitTestResultEmpty,
-        );
-      }
+      // if (frame) {
+      //   handleXRHitTest(
+      //     renderer,
+      //     frame,
+      //     onHitTestResultReady,
+      //     onHitTestResultEmpty,
+      //   );
+      // }
       renderer.render(scene, camera);
     };
 
