@@ -128,7 +128,7 @@ export function createScene(renderer: WebGLRenderer) {
   /**
    * Create the plane marker to show on tracked surfaces.
    */
-  const planeMarker: Mesh = new Plane(new Point2D(0.3, 0.5),"assets/rug.jpg").GeometryMesh;
+  const planeMarker: Mesh = new Plane(new Point2D(1, 1),"assets/rug.jpg").GeometryMesh;
   planeMarker.rotateX(-Math.PI / 2);
   scene.add(planeMarker);
 
