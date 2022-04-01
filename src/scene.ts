@@ -130,7 +130,10 @@ export function createScene(renderer: WebGLRenderer) {
    */
   const planeMarker: Mesh = new Plane(new Point2D(1, 1),"assets/rug.jpg").GeometryMesh;
   planeMarker.rotateX(-Math.PI / 2);
-  scene.add(planeMarker);
+  scene.add(planeMarker),
+    planeCircle = createPlaneMarker();
+
+  scene.add(planeCircle);
 
   /**
    * Setup the controller to get input from the XR space.
@@ -145,11 +148,11 @@ export function createScene(renderer: WebGLRenderer) {
    * in XR mode.
    */
   function onSelect() {
-    if (planeMarker.visible) {
+    if (planeCircle.visible) {
       const model = carModel.clone();
 
       // Place the model on the spot where the marker is showing.
-      model.position.setFromMatrixPosition(planeMarker.matrix);
+      model.position.setFromMatrixPosition(planeCircle.matrix);
 
       // Rotate the model randomly to give a bit of variation.
       model.rotation.y = Math.random() * (Math.PI * 2);
@@ -173,7 +176,7 @@ export function createScene(renderer: WebGLRenderer) {
    * Called whenever the hit test is empty/unsuccesful.
    */
   function onHitTestResultEmpty() {
-    planeMarker.visible = false;
+    planeMarker.visible = true;
   }
 
   /**
