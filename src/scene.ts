@@ -156,7 +156,7 @@ export function createScene(renderer: WebGLRenderer) {
       planeMarker.position.setFromMatrixPosition(planeCircle.matrix);
 
       // Rotate the model randomly to give a bit of variation.
-      planeMarker.rotation.y = Math.random() * (Math.PI * 2);
+      planeCircle.rotation.y = Math.random() * (Math.PI * 2);
       planeMarker.visible = true;
 
       scene.add(planeMarker);
@@ -168,8 +168,8 @@ export function createScene(renderer: WebGLRenderer) {
    */
   function onHitTestResultReady(hitPoseTransformed: Float32Array) {
     if (hitPoseTransformed) {
-      planeMarker.visible = true;
-      planeMarker.matrix.fromArray(hitPoseTransformed);
+      planeCircle.visible = true;
+      planeCircle.matrix.fromArray(hitPoseTransformed);
     }
   }
 
@@ -177,7 +177,7 @@ export function createScene(renderer: WebGLRenderer) {
    * Called whenever the hit test is empty/unsuccesful.
    */
   function onHitTestResultEmpty() {
-    planeMarker.visible = false;
+    planeCircle.visible = false;
   }
 
   /**
