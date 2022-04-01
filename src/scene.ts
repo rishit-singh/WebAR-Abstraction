@@ -134,7 +134,7 @@ export function createScene(renderer: WebGLRenderer) {
 
   const planeCircle: Mesh = createPlaneMarker();
 
- // scene.add(planeCircle);
+  scene.add(planeCircle);
 
   /**
    * Setup the controller to get input from the XR space.
