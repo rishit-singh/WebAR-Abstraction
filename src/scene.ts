@@ -186,15 +186,17 @@ export function createScene(renderer: WebGLRenderer) {
    * whenever anything changes.
    */
   const renderLoop = (timestamp: any, frame?: XRFrame) => {
-    if (renderer.xr.isPresenting) {
-      if (frame) {
-        handleXRHitTest(
-          renderer,
-          frame,
-          onHitTestResultReady,
-          onHitTestResultEmpty,
-        );
-      }
+    /////////////////////////////////////
+    // if (renderer.xr.isPresenting) { //
+    //   if (frame) {                  //
+    //     handleXRHitTest(            //
+    //       renderer,                 //
+    //       frame,                    //
+    //       onHitTestResultReady,     //
+    //       onHitTestResultEmpty,     //
+    //     );                          //
+    //   }                             //
+    /////////////////////////////////////
 
       renderer.render(scene, camera);
     }
