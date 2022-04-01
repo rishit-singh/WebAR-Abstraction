@@ -130,8 +130,9 @@ export function createScene(renderer: WebGLRenderer) {
    */
   const planeMarker: Mesh = new Plane(new Point2D(1, 1),"assets/rug.jpg").GeometryMesh;
   planeMarker.rotateX(-Math.PI / 2);
-  scene.add(planeMarker),
-    planeCircle = createPlaneMarker();
+  scene.add(planeMarker);
+
+  const planeCircle: Mesh = createPlaneMarker();
 
   scene.add(planeCircle);
 
@@ -199,8 +200,7 @@ export function createScene(renderer: WebGLRenderer) {
     /////////////////////////////////////
 
       renderer.render(scene, camera);
-    }
-  };
+    };
 
   renderer.setAnimationLoop(renderLoop);
 }
