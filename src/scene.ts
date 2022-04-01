@@ -121,7 +121,7 @@ export function createScene(renderer: WebGLRenderer) {
 
   let carModel: Object3D;
 
-  gltfLoader.load("../assets/models/sports_car.glb", (gltf: GLTF) => {
+  gltfLoader.load("assets/models/sports_car.glb", (gltf: GLTF) => {
     carModel = gltf.scene.children[0];
   });
 
@@ -148,18 +148,18 @@ export function createScene(renderer: WebGLRenderer) {
    * The onSelect function is called whenever we tap the screen
    * in XR mode.
    */
-  function onSelect() {
-    if (planeCircle.visible) {
-      const model = carModel.clone();
-
+  function onSelect()
+  {
+    if (planeCircle.visible)
+    {
       // Place the model on the spot where the marker is showing.
-      model.position.setFromMatrixPosition(planeCircle.matrix);
+      planeMarker.position.setFromMatrixPosition(planeCircle.matrix);
 
       // Rotate the model randomly to give a bit of variation.
-      model.rotation.y = Math.random() * (Math.PI * 2);
-      model.visible = true;
+      planeMarker.rotation.y = Math.random() * (Math.PI * 2);
+      planeMarker.visible = true;
 
-      scene.add(model);
+      scene.add(planeMarker);
     }
   }
 
