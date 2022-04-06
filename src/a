@@ -156,9 +156,9 @@ export function createScene(renderer: WebGLRenderer) {
 
       // Rotate the model randomly to give a bit of variation.
       // planeCircle.rotation.y = Math.random() * (Math.PI * 2);
-      //planeMarker.visible = true;
+      planeMarker.visible = true;
 
-      //scene.add(planeMarker);
+      scene.add(planeMarker);
     }
   }
 

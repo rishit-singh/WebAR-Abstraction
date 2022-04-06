@@ -21,9 +21,13 @@ function initializeXRApp() {
 
   document.body.appendChild(renderer.domElement);
 
+  var button;
+
   document.body.appendChild(
-    ARButton.createButton(renderer, { requiredFeatures: ["hit-test"] }),
+    button = ARButton.createButton(renderer, { requiredFeatures: ["hit-test"] }),
   );
+
+  button.click();
 
   displayIntroductionMessage();
 

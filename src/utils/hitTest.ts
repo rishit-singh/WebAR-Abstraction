@@ -14,36 +14,40 @@ export function handleXRHitTest(
 
   let xrHitPoseMatrix: Float32Array | null | undefined;
 
-  if (session && hitTestSourceRequested === false) {
+  if (session && hitTestSourceRequested === false)
+  {
     session.requestReferenceSpace("viewer").then((referenceSpace) => {
-      if (session) {
-        session
-          .requestHitTestSource({ space: referenceSpace })
-          .then((source) => {
-            hitTestSource = source;
-          });
+      if (session)
+      {
+        session.requestHitTestSource({ space: referenceSpace }).then((source) => {
+          hitTestSource = source;
+        });
       }
     });
 
     hitTestSourceRequested = true;
   }
 
-  if (hitTestSource) {
+  if (hitTestSource)
+  {
     const hitTestResults = frame.getHitTestResults(hitTestSource);
 
-    if (hitTestResults.length) {
-      const hit = hitTestResults[0];
+    if (hitTestResults.length)
+    {
+        const hit = hitTestResults[0];
 
-      if (hit && hit !== null && referenceSpace) {
-        const xrHitPose = hit.getPose(referenceSpace);
+        if (hit && hit !== null && referenceSpace)
+        {
+            const xrHitPose = hit.getPose(referenceSpace);
 
-        if (xrHitPose) {
-          xrHitPoseMatrix = xrHitPose.transform.matrix;
-          onHitTestResultReady(xrHitPoseMatrix);
+            if (xrHitPose)
+            {
+                xrHitPoseMatrix = xrHitPose.transform.matrix;
+                onHitTestResultReady(xrHitPoseMatrix);
+            }
         }
-      }
-    } else {
-      onHitTestResultEmpty();
     }
+    else
+        onHitTestResultEmpty();
   }
 };
