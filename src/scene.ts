@@ -113,28 +113,24 @@ export function createScene(renderer: WebGLRenderer) {
   const ambientLight = new AmbientLight(0xffffff, 1.0);
   scene.add(ambientLight);
 
-  /**
-   * Load the gLTF model and assign result to variable.
-   */
-  const gltfLoader = new GLTFLoader();
-
-  let carModel: Object3D;
-
-  gltfLoader.load("assets/models/sports_car.glb", (gltf: GLTF) => {
-    carModel = gltf.scene.children[0];
-  });
-
-  /**
+  /*
    * Create the plane marker to show on tracked surfaces.
    */
   // const planeMarker: Mesh = new Plane(new Point2D(1, 1),"assets/rug.jpg").GeometryMesh;
   // planeMarker.rotateX(-Math.PI / 2);
   //scene.add(planeMarker);
 
-  const planeCircle: Mesh = new Plane(new Point2D(1, 1),"assets/rug.jpg").GeometryMesh;
+  const plane: Mesh = createPlaneMarker();  //new Plane(new Point2D(1 / 4, 1 / 4),"assets/rug.jpg").GeometryMesh;
 
-  scene.add(planeCircle);
+  var instance: Mesh = new Plane(new Point2D(1, 1),"assets/rug.jpg").GeometryMesh;
 
+  instance.rotateX(-Math.PI / 2);
+  instance.rotateZ(-Math.PI / 8);
+  instance.translateY(-5);
+  instance.visible = false;
+
+  scene.add(instance);
+  scene.add(plane);
   /**
    * Setup the controller to get input from the XR space.
    */
@@ -149,16 +145,13 @@ export function createScene(renderer: WebGLRenderer) {
    */
   function onSelect()
   {
-    if (planeCircle.visible)
+    if (plane.visible)
     {
       // Place the model on the spot where the marker is showing.
-      // planeMarker.position.setFromMatrixPosition(planeCircle.matrix);
-
+      instance.position.setFromMatrixPosition(plane.matrix);
+      instance.visible = true;
       // Rotate the model randomly to give a bit of variation.
-      // planeCircle.rotation.y = Math.random() * (Math.PI * 2);
-      //planeMarker.visible = true;
-
-      //scene.add(planeMarker);
+      plane.rotation.y = Math.random() * (Math.PI * 2);
     }
   }
 
@@ -169,16 +162,18 @@ export function createScene(renderer: WebGLRenderer) {
   {
     if (hitPoseTransformed)
     {
-      planeCircle.visible = true;
-      planeCircle.matrix.fromArray(hitPoseTransformed);
+      plane.visible = true;
+      plane.matrix.fromArray(hitPoseTransformed);
+
     }
   }
 
   /**
    * Called whenever the hit test is empty/unsuccesful.
    */
-  function onHitTestResultEmpty() {
-      planeCircle.visible = true;
+  function onHitTestResultEmpty()
+  {
+      plane.visible = false;
   }
 
   /**
@@ -188,19 +183,20 @@ export function createScene(renderer: WebGLRenderer) {
    * whenever anything changes.
    */
   const renderLoop = (timestamp: any, frame?: XRFrame) => {
+    renderer.render(scene, camera);
     if (renderer.xr.isPresenting)
     {
-      // if (frame) {
-      //   handleXRHitTest(
-      //     renderer,
-      //     frame,
-      //     onHitTestResultReady,
-      //     onHitTestResultEmpty,
-      //   );
-      // }
+      if (frame) {
+        handleXRHitTest(
+          renderer,
+          frame,
+          onHitTestResultReady,
+          onHitTestResultEmpty,
+        );
+      }
       renderer.render(scene, camera);
-    };
+    }
+  };
 
-    renderer.setAnimationLoop(renderLoop);
-  }
+  renderer.setAnimationLoop(renderLoop);
 }
