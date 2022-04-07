@@ -178,7 +178,7 @@ export function createScene(renderer: WebGLRenderer) {
    * Called whenever the hit test is empty/unsuccesful.
    */
   function onHitTestResultEmpty() {
-    planeCircle.visible = true;
+      planeCircle.visible = true;
   }
 
   /**
