@@ -1,0 +1,49 @@
+﻿<Properties StartupConfiguration="{242BF258-9885-42BD-9948-AC085F6AA0C3}|Default">
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.WebAR-Abstraction PreferredExecutionTarget="/Applications/Firefox.app" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="DeviceInfo.ts">
+    <Files>
+      <File FileName="wwwroot/index.html" Line="15" Column="30" IsPinned="True" />
+      <File FileName="Program.cs" Line="12" Column="28" />
+      <File FileName="wwwroot/dist/index.bundle.js" Line="1" Column="1" />
+      <File FileName="wwwroot/src/utils/domUtils.ts" Line="20" Column="2" />
+      <File FileName="wwwroot/src/objects/PlaneMarker/index.ts" Line="67" Column="2" />
+      <File FileName="wwwroot/src/index.ts" Line="81" Column="1" />
+      <File FileName="wwwroot/src/utils/hitTest.ts" Line="29" Column="4" />
+      <File FileName="wwwroot/src/utils/Tools.ts" Line="3" Column="6" />
+      <File FileName="wwwroot/src/global.d.ts" Line="10" Column="24" />
+      <File FileName="global.ts" Line="3" Column="2" />
+      <File FileName="DeviceInfo.ts" Line="5" Column="9" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="WebAR-Abstraction" expanded="True">
+            <Node name="WebAR-Abstraction" expanded="True">
+              <Node name="wwwroot" expanded="True">
+                <Node name="dist" expanded="True">
+                  <Node name="assets" expanded="True" />
+                </Node>
+                <Node name="Properties" expanded="True" />
+                <Node name="src" expanded="True">
+                  <Node name="objects" expanded="True">
+                    <Node name="PlaneMarker" expanded="True" />
+                  </Node>
+                  <Node name="utils" expanded="True" />
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+</Properties>
