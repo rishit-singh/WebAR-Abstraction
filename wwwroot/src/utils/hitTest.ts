@@ -35,8 +35,8 @@ export function handleXRHitTest(
     if (hitTestResults.length)
     {
         const hit = hitTestResults[0];
-
-        if (hit && hit !== null && referenceSpace)
+        
+        if (hit && referenceSpace)
         {
             const xrHitPose = hit.getPose(referenceSpace);
 

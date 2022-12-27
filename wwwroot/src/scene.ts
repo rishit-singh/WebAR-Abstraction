@@ -13,6 +13,7 @@ import {
   MeshBasicMaterial,
   TextureLoader
 } from "three";
+import {GlobalData} from "./global";
 
 import { Tools } from "./utils/Tools";
     
@@ -53,20 +54,9 @@ import { Tools } from "./utils/Tools";
 
 
 
-class GlobalData
-{
-    public static DefaultTextureMaterialPath: string = "assets/";
+GlobalData.DefaultDeviceInfo = GlobalData.GetDeviceInfo();
 
-    public static DefaultTextureFileExtension: string =  ".jpg";
-            
-    public static GetDefaultTextureMaterialPath(textureName: string): string
-    {
-        //let objects: any[] = [ Tools.GetSubString(window.location.search, 1, window.location.search.length - 1) ];
-
-        return (GlobalData.DefaultTextureMaterialPath + Tools.GetSubString(window.location.search, 1, window.location.search.length) + GlobalData.DefaultTextureFileExtension);
-    }
-}
-
+alert(JSON.stringify(GlobalData.DefaultDeviceInfo));
 
 class Point2D
 {
@@ -74,13 +64,28 @@ class Point2D
   public Y: number;
 
   public constructor(x: number, y: number)
-  {
+  /**/{
     this.X  = x;
     this.Y = y;
   }
 }
 
-class Plane
+class Object
+{
+    public GeometryMesh: Mesh;
+    
+    public GetMesh(): Mesh
+    {
+        return this.GeometryMesh;
+    }
+    
+    constructor() 
+    {
+        this.GeometryMesh = new Mesh();
+    }
+}
+
+class Plane extends Object
 {
     private Geometry: PlaneGeometry;
 
@@ -93,7 +98,7 @@ class Plane
     /*
      * Loads a texture from the provided file path
      */
-    protected LoadTexture(filePath: string): MeshBasicMaterial
+    protected SetTexture(filePath: string): MeshBasicMaterial
     {
         return (this.Texture = new MeshBasicMaterial({
             map: new TextureLoader().load(filePath)
@@ -107,9 +112,10 @@ class Plane
 
     public constructor(dimensions: Point2D, texturePath: string)
     {
+        super();
         this.Dimensions = dimensions;
         this.Geometry = new PlaneGeometry(this.Dimensions.X, this.Dimensions.Y);
-        this.Texture = this.LoadTexture(texturePath);
+        this.Texture = this.SetTexture(texturePath);
         this.GeometryMesh = new Mesh();
         this.GetMesh();
     }
@@ -139,9 +145,7 @@ export function createScene(renderer: WebGLRenderer, textureID: string) {
         
   const plane: Mesh = createPlaneMarker(); //new Plane(new Point2D(1 / 4, 1 / 4),"assets/rug.jpg").GeometryMesh;
 
-    alert(window.location.search);//textureID = Tools.GetSubString(window.location.search, 1, window.location.search.length));
-
-  var instance: Mesh = new Plane(new Point2D(1, 1), GlobalData.GetDefaultTextureMaterialPath(textureID)).GeometryMesh;
+  var instance: Mesh = new Plane(new Point2D(1, 2), GlobalData.GetDefaultTextureMaterialPath(textureID)).GeometryMesh;
 
   instance.rotateX(-Math.PI / 2);
   instance.rotateZ(-Math.PI / 8);
@@ -177,6 +181,7 @@ export function createScene(renderer: WebGLRenderer, textureID: string) {
 
   /**
    * Called whenever a new hit test result is ready.
+   * 
    */
   function onHitTestResultReady(hitPoseTransformed: Float32Array)
   {

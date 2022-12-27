@@ -2,31 +2,38 @@
 
 export enum Platform
 {
-    Web=-1,
-   Android,
-   iOS 
+    Unknown = -1,
+    Android,
+    iOS 
 }
 
+export enum Browser
+{
+    Chromium,
+    Gecko,
+    WebKit
+}
 
-
-export class DeviceInfo {
-    public static PlatformStrings: string[][] = [
-        [
-            "Web",
-            ""
-        ],
-        [
-            "Mozilla",
-        ], 
-        [
-        ]
-    ];
+export class DeviceInfo 
+{
+    public static PlatformStrings: string[] = [
+        "Android",
+        "iPhone"
+    ]; 
+   
+    public DevicePlatform: Platform;
+    public DeviceBrowser: Browser;
     
-    public OS: Platform;
+    public ToJson(): string
+    {
+        return  JSON.stringify(this);
+    }
     
     public constructor() 
     {
-        this.OS = Platform.Web;
+        this.DevicePlatform = Platform.Unknown;
+        this.DeviceBrowser = Browser.Chromium;
     }
 }
+
 

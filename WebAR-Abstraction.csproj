@@ -15,4 +15,9 @@
     <None Include="wwwroot\src\global.ts" />
     <None Include="wwwroot\src\utils\Tools.ts" />
   </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="wwwroot\src\Component.ts" />
+    <TypeScriptCompile Include="wwwroot\src\Image.ts" />
+    <TypeScriptCompile Include="wwwroot\src\Landing.ts" />
+  </ItemGroup>
 </Project>

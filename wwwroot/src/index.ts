@@ -9,9 +9,12 @@ import {
 import "./global"
 import "./styles.css";
 import "./DeviceInfo"
-
+import {URLTools} from "./utils/Tools";
+import {LandingPage} from "./Landing";
+import {Heading} from "./utils/domUtils";
 import { Tools } from "./utils/Tools"
-
+import {Image} from "./Image";
+import {GlobalData} from "./global";
 //class CSSProperty
 //{
 //    public Key: string;
@@ -70,13 +73,13 @@ import { Tools } from "./utils/Tools"
 
 //var DefaultDeviceInfo: DeviceInfo = new DeviceInfo();
 
-alert(Tools.Split(window.location.search, "++"));
+alert(window.navigator.userAgent);
 
 function initializeXRApp() {
-  const { devicePixelRatio, innerHeight, innerWidth } = window;
-
+  const{  devicePixelRatio, innerHeight, innerWidth } = window;
+    
   const renderer = new WebGLRenderer({ antialias: true, alpha: true });
-
+    
   renderer.setSize(innerWidth, innerHeight);
   renderer.setPixelRatio(devicePixelRatio);
 
@@ -95,7 +98,6 @@ function initializeXRApp() {
     
   // displayIntroductionMessage();
 
-
     createScene(renderer, Tools.GetSubString(window.location.search, 1, window.location.search.length));
 };
 
@@ -107,6 +109,18 @@ async function start() {
     }
     if (!isImmersiveArSupported) {
         displayUnsupportedBrowserMessage();
+//@ts-ignore
+        let params: Map<string, string> = null;
+        
+        let landingPage: LandingPage; 
+        
+       //@ts-ignore 
+        (landingPage = new LandingPage((params = URLTools.GetParams()).get("model").toString(), GlobalData.GetDefaultTextureMaterialPath(params.get("model").toString()))); //; //.Render();w
+            //@ts-ignore
+        //@ts-ignore:
+        
+        
+        landingPage.Render();
         return;
     }
 
@@ -116,9 +130,9 @@ async function start() {
     }
     
     initializeXRApp();
-
 }
 
 
 start();
     
+ 
