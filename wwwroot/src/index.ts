@@ -81,9 +81,8 @@ async function start() {
 }
 
 
-//start();
+start();
 
-document.body.appendChild(new Error( "foobar", ErrorType.NotSupported).RootElement);
 
     
  
