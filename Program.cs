@@ -14,7 +14,6 @@ namespace WebAR_Abstraction
                 options.KnownProxies.Add(IPAddress.Parse("10.0.0.100"));
             });
         }
-       
             
         public static void Main(string[] args)
         {
