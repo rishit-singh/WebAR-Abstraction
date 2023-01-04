@@ -2,10 +2,13 @@ import {Heading} from "./utils/domUtils";
 import {URLTools} from "./utils/Tools";
 import {Image} from "./Image";
 import {Component} from "./Component";
+import {Vector2D} from "./Vector";
 
 export class Button extends Component
 {
     public Text: string;
+   
+    public Dimensions: Vector2D;
     
     public ToDomElement(): Element
     {
@@ -17,12 +20,24 @@ export class Button extends Component
        this.RootElement.addEventListener("click", callback); 
     }
     
-    public constructor(text: string, className: string)
+    public MapCSS()
+    {
+        this.Properties.Add("height", this.Dimensions.Y+ "px");
+        this.Properties.Add("width",  this.Dimensions.X+ "px");
+        
+        this.RootElement.setAttribute("style", this.Properties.ToString());
+    }
+    
+    public constructor(text: string, className: string, dimensions: Vector2D)
     {
         super(document.createElement("button"));
         this.Text = text;
         this.RootElement.className = className;
         this.RootElement.textContent = this.Text;
+        
+        this.Dimensions = dimensions;
+        
+        this.MapCSS();
     }
 }
 
@@ -53,7 +68,7 @@ export class Page
     public RootElement: Element;
     
     public Sections: Map<string, Element>;
-   
+    
     public AddElement(section: string, element: Element)
     {
         //@ts-ignore
@@ -107,10 +122,18 @@ export class LandingPage extends Page
     {
         this.AddSection("header");
         this.AddSection("image_body");
+        this.AddSection("input");
         
         this.AddElement("header", this.PageHeading.ToDOMElement());
         this.AddElement("image_body", this.ImageObject.ToDOMElement());
-        this.AddElement("image_body", new Button("Go", "default_button").ToDomElement());
+        
+        let button: Button = new Button("Start", "default_button", new Vector2D(200, 150));
+       
+        button.SetOnClickCallback(()=>{console.log("clicked");});
+        //@ts-ignore
+        button.RootElement.style.color = "green";
+        
+        this.AddElement("input", button.ToDomElement());
     }
     
     
@@ -120,7 +143,7 @@ export class LandingPage extends Page
         
         this.PageHeading =  new Heading(heading);
         this.Sections = new Map<string, Element>(); 
-        this.ImageObject = new Image(image, "");
+        this.ImageObject = new Image(image, "", new Vector2D(100, 200));
        
         this.Elements = [];
        

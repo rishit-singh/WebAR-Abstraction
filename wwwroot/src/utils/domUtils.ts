@@ -19,6 +19,8 @@ export async function browserHasImmersiveArCompatibility(): Promise<boolean> {
           : "Browser does not support immersive-ar"
       }`,
     );
+    alert(isSupported);
+    return isSupported;
   }
   
   return isSupported;
@@ -100,7 +102,7 @@ export class Heading
   {
     this.Content = content;
     this.Level = Tools.Clamp(headingLevel, 1, 6); 
-  
+    
     this.DOMElement = document.createElement(Heading.GetHeadingTag(this.Level)) as HTMLHeadingElement;
     this.DOMElement.innerText = this.Content;
   }  
@@ -122,7 +124,7 @@ export function displayUnsupportedBrowserMessage(): void {
     var paramHash: Map<string, string>;
 
     // @ts-ignore
-    appRoot.appendChild(new Heading((paramHash = URLTools.GetParams()).get("heading").toString(), paramHash.get("level")).ToDOMElement());
+    //appRoot.appendChild(new Heading((paramHash = URLTools.GetParams()).get("heading").toString(), paramHash.get("level")).ToDOMElement());
   }
 
   const middleMessage: HTMLParagraphElement = document.createElement("p");

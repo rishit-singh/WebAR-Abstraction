@@ -9,6 +9,8 @@
 
   <ItemGroup>
     <Content Remove="wwwroot\src\utils\Tools.ts" />
+    <Content Remove="wwwroot\src\global.ts" />
+    <Content Remove="wwwroot\src\global.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <None Include="wwwroot\src\DeviceInfo.ts" />
@@ -17,7 +19,10 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="wwwroot\src\Component.ts" />
+    <TypeScriptCompile Include="wwwroot\src\CSSProperties.ts" />
+    <TypeScriptCompile Include="wwwroot\src\Error.ts" />
     <TypeScriptCompile Include="wwwroot\src\Image.ts" />
     <TypeScriptCompile Include="wwwroot\src\Landing.ts" />
+    <TypeScriptCompile Include="wwwroot\src\Vector.ts" />
   </ItemGroup>
 </Project>

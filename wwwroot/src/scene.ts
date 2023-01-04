@@ -135,7 +135,7 @@ export function createScene(renderer: WebGLRenderer, textureID: string) {
    */
   const ambientLight = new AmbientLight(0xffffff, 1.0);
   scene.add(ambientLight);
-
+    
   /*
    * Create the plane marker to show on tracked surfaces.
    */
