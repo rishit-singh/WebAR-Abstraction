@@ -52,6 +52,7 @@ async function start() {
     if (window.location.search.length == 0) {
         console.log("404");
     }
+    
     if (!isImmersiveArSupported) {
         displayUnsupportedBrowserMessage();
         //@ts-ignore
