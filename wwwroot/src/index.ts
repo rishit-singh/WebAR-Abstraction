@@ -44,7 +44,6 @@ async function start() {
     
     model = Tools.GetSubString(window.location.search, 1, window.location.search.length);
 
-
     if (GlobalData.DefaultDeviceInfo.DevicePlatform == Platform.iOS)
       window.location.replace(GlobalData.GetDefaultModelPath(model));
     return;
