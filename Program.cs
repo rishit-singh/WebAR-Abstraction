@@ -9,8 +9,7 @@ namespace WebAR_Abstraction
         {
             builder.Services.AddRazorPages();
             
-            builder.Services.Configure<ForwardedHeadersOptions>(options =>
-            {
+            builder.Services.Configure<ForwardedHeadersOptions>(options => {
                 options.KnownProxies.Add(IPAddress.Parse("10.0.0.100"));
             });
         }
@@ -40,3 +39,4 @@ namespace WebAR_Abstraction
         }
     }
 }
+

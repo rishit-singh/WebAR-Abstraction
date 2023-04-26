@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "HHxiIroA6TACCM1xf9FVASZJOU2hUyAuw2bnlcUL4OfwX9uB8swLTs7xMTaTSbNQoX9t3SOiY3825O+VFIVHvA==",
+  "dgSpecHash": "0ro5EetpZiwHnKkKKKu/tmDUd5ORSfbE9rT3eAyMykfog75iea+aTzYU23AtKszC34Vvur6WWtlUtkUi4wlgcg==",
   "success": true,
   "projectFilePath": "/Users/rishit/src/repos/AR1/WebAR-Abstraction/WebAR-Abstraction.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "/Users/rishit/.nuget/packages/microsoft.netcore.app.ref/6.0.11/microsoft.netcore.app.ref.6.0.11.nupkg.sha512",
+    "/Users/rishit/.nuget/packages/microsoft.aspnetcore.app.ref/6.0.11/microsoft.aspnetcore.app.ref.6.0.11.nupkg.sha512",
+    "/Users/rishit/.nuget/packages/microsoft.netcore.app.host.osx-arm64/6.0.11/microsoft.netcore.app.host.osx-arm64.6.0.11.nupkg.sha512"
+  ],
   "logs": []
 }

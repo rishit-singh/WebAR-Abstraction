@@ -52,7 +52,7 @@ import { Tools } from "./utils/Tools";
 
 // Custom 3D model augmentation
 
-
+import {XRGestures} from "./XRGestures";
 
 GlobalData.DefaultDeviceInfo = GlobalData.GetDeviceInfo();
 
@@ -91,8 +91,6 @@ class Plane extends Object
 
     public Texture: MeshBasicMaterial;
 
-    public GeometryMesh: Mesh;
-
     public Dimensions: Point2D;
 
     /*
@@ -121,8 +119,12 @@ class Plane extends Object
     }
 }
 
-export function createScene(renderer: WebGLRenderer, textureID: string) {
+export function createScene(renderer: WebGLRenderer, textureID: string) 
+{
   const scene = new Scene();
+  
+  let gestures: XRGestures = new XRGestures(renderer);
+  
   
   const camera = new PerspectiveCamera(
     70,
@@ -157,7 +159,7 @@ export function createScene(renderer: WebGLRenderer, textureID: string) {
   /**
    * Setup the controller to get input from the XR space.
    */
-  const controller = renderer.xr.getController(0);
+  const controller = renderer.xr.getController( 0);
   scene.add(controller);
 
   controller.addEventListener("select", onSelect);
@@ -165,7 +167,12 @@ export function createScene(renderer: WebGLRenderer, textureID: string) {
   /**   
    * The onSelect function is called whenever we tap the screen
    * in XR mode.
-   */
+   * */
+    //@ts-ignore  
+    gestures.addEventListener("rotate", (ev) => {
+        alert("rotate!"); 
+    });
+  
   function onSelect()
   {
     if (plane.visible)
@@ -176,9 +183,9 @@ export function createScene(renderer: WebGLRenderer, textureID: string) {
       instance.position.setFromMatrixPosition(plane.matrix);
       // Rotate the model    to give a bit of variation.
       plane.rotation.y = Math.random() * (Math.PI * 2);
-    }
-  }
-
+    }       
+  } 
+  
   /**
    * Called whenever a new hit test result is ready.
    * 
@@ -199,7 +206,6 @@ export function createScene(renderer: WebGLRenderer, textureID: string) {
   {
       plane.visible = false;
   }
-
   /**
    * The main render loop.
    *

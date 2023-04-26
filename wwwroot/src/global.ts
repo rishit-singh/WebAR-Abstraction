@@ -7,6 +7,10 @@ export class GlobalData
 
     public static DefaultTextureMaterialPath: string = "assets/";
 
+    public static DefaultModelPath: string = "assets/models/";
+   
+    public static DefaultStorageServerURL = "https://storage.googleapis.com/arusdz/"; 
+    
     public static DefaultTextureFileExtension: string =  ".jpg";
             
     public static GetDefaultTextureMaterialPath(textureName: string): string
@@ -15,6 +19,12 @@ export class GlobalData
 
         return (GlobalData.DefaultTextureMaterialPath + textureName + GlobalData.DefaultTextureFileExtension);
     }
+    
+    public static GetDefaultModelPath(modelName: string): string
+    {
+        return (GlobalData.DefaultStorageServerURL + modelName + ".usdz");
+    }
+    
     public static GetDeviceInfo(): DeviceInfo
     {
         let deviceInfo: DeviceInfo = new DeviceInfo();

@@ -1,6 +1,6 @@
-import { WebGLRenderer } from "three/src/renderers/WebGLRenderer";
-import { ARButton } from "three/examples/jsm/webxr/ARButton";
-import { createScene } from "./scene";
+import {WebGLRenderer} from "three/src/renderers/WebGLRenderer";
+import {ARButton} from "three/examples/jsm/webxr/ARButton";
+import {createScene} from "./scene";
 import {
   browserHasImmersiveArCompatibility,
   displayIntroductionMessage,
@@ -9,14 +9,11 @@ import {
 import "./global"
 import "./styles.css";
 import "./DeviceInfo"
-import {URLTools} from "./utils/Tools";
-import {LandingPage} from "./Landing";
-import {Heading} from "./utils/domUtils";
-import { Tools } from "./utils/Tools"
+import {Tools} from "./utils/Tools";
 import {Image} from "./Image";
 import {GlobalData} from "./global";
 import {Vector2D} from "./Vector";
-import {Error, ErrorType} from "./Error";
+import {Platform} from "./DeviceInfo";
 
 function initializeXRApp(model: string) {
   const{  devicePixelRatio, innerHeight, innerWidth } = window;
@@ -44,7 +41,14 @@ function initializeXRApp(model: string) {
 
 async function start() {
   const isImmersiveArSupported = await browserHasImmersiveArCompatibility();
+    
+    model = Tools.GetSubString(window.location.search, 1, window.location.search.length);
 
+
+    if (GlobalData.DefaultDeviceInfo.DevicePlatform == Platform.iOS)
+      window.location.replace(GlobalData.GetDefaultModelPath(model));
+    return;
+    
     if (window.location.search.length == 0) {
         console.log("404");
     }
@@ -73,10 +77,12 @@ async function start() {
     }
     
     var model: string = "";
+   
+    GlobalData.DefaultDeviceInfo = GlobalData.GetDeviceInfo();
     
-    displayIntroductionMessage( model = Tools.GetSubString(window.location.search, 1, window.location.search.length));
+    displayIntroductionMessage(model);
 
-    document.body.appendChild(new Image(GlobalData.GetDefaultTextureMaterialPath(model), "", new Vector2D(300, 500)).ToDOMElement());
+  document.body.appendChild(new Image(GlobalData.GetDefaultTextureMaterialPath(model), "", new Vector2D(300, 500)).ToDOMElement());
     initializeXRApp(model);
 }
 
