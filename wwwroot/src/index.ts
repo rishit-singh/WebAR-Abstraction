@@ -14,6 +14,7 @@ import {Image} from "./Image";
 import {GlobalData} from "./global";
 import {Vector2D} from "./Vector";
 import {Platform} from "./DeviceInfo";
+import {TextureTools} from "./TextureTools";
 
 function initializeXRApp(model: string) {
   const{  devicePixelRatio, innerHeight, innerWidth } = window;
@@ -29,7 +30,6 @@ function initializeXRApp(model: string) {
 
   var button;
 
-  
   document.body.appendChild(
     button = ARButton.createButton(renderer, { requiredFeatures: ["hit-test"] }),
   );
@@ -42,11 +42,14 @@ function initializeXRApp(model: string) {
 async function start() {
   const isImmersiveArSupported = await browserHasImmersiveArCompatibility();
     
-    model = Tools.GetSubString(window.location.search, 1, window.location.search.length);
+  
+    let model: string = Tools.GetSubString(window.location.search, 1, window.location.search.length);
 
-    if (GlobalData.DefaultDeviceInfo.DevicePlatform == Platform.iOS)
+    if (GlobalData.DefaultDeviceInfo.DevicePlatform == Platform.iOS) {
       window.location.replace(GlobalData.GetDefaultModelPath(model));
-    return;
+    
+     return;
+    }
     
     if (window.location.search.length == 0) {
         console.log("404");
@@ -54,17 +57,6 @@ async function start() {
     
     if (!isImmersiveArSupported) {
         displayUnsupportedBrowserMessage();
-        //@ts-ignore
-       // let params: Map<string, string> = null;
-        
-        //let landingPage: LandingPage; 
-        
-       //@ts-ignore 
-        //(landingPage = new LandingPage((params = URLTools.GetParams()).get("model").toString(), GlobalData.GetDefaultTextureMaterialPath(params.get("model").toString()))); //; //.Render();w
-            //@ts-ignore
-        //@ts-ignore:
-        
-        
         //landingPage.Render();
         return;
     }
@@ -72,20 +64,26 @@ async function start() {
     if (window.location.search.length == 0) {
         console.log("404");
         
-        
         return;
     }
-    
-    var model: string = "";
-   
-    GlobalData.DefaultDeviceInfo = GlobalData.GetDeviceInfo();
+
+    console.log("exists: " + (await fetch("https://storage.googleapis.com/arusdz/textures/21526.jpg")).statusText);
+    // console.log("!exists: " + (await fetch("assets/9.jpg")).statusText);
+
+
+  GlobalData.DefaultDeviceInfo = GlobalData.GetDeviceInfo();
     
     displayIntroductionMessage(model);
 
-  document.body.appendChild(new Image(GlobalData.GetDefaultTextureMaterialPath(model), "", new Vector2D(300, 500)).ToDOMElement());
+  // document.body.appendChild(new Image(GlobalData.GetDefaultTextureMaterialPath(model), "", new Vector2D(300, 500)).ToDOMElement());
     initializeXRApp(model);
 }
-
+export async function fetchImage(url: string): Promise<HTMLImageElement>
+{
+  const img = document.createElement("img");
+  img.src =  URL.createObjectURL(await (await fetch(url)).blob());
+  return img;
+}
 
 start();
 

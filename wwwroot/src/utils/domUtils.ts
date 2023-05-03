@@ -1,4 +1,5 @@
-import {Tools, URLTools } from "./Tools" 
+import {Tools, URLTools } from "./Tools"
+import {GlobalData} from "../global"; 
 
 /*  
  * Returns true if navigator has xr with 'immersive-ar' capabilities
@@ -116,7 +117,7 @@ export function displayUnsupportedBrowserMessage(): void {
   const bigMessage: HTMLParagraphElement = document.createElement("p");
 
   
-  bigMessage.innerText = "😢 Oh no!";
+  bigMessage.innerText = "Oh no!";
  
   if (appRoot) {
     appRoot.appendChild(bigMessage);
@@ -154,8 +155,13 @@ export function displayIntroductionMessage(title: string) {
   const appRoot: HTMLElement | null = document.getElementById("app-root");
   if (appRoot == null) 
     return appRoot;
+
+  let image: HTMLImageElement = new Image();
+  
+  image.src = GlobalData.GetDefaultTextureMaterialPath(title);
   
   appRoot.appendChild(new Heading(title).ToDOMElement());
+  appRoot.appendChild(image);
 }
 
 

@@ -23,6 +23,7 @@
     <TypeScriptCompile Include="wwwroot\src\Error.ts" />
     <TypeScriptCompile Include="wwwroot\src\Image.ts" />
     <TypeScriptCompile Include="wwwroot\src\Landing.ts" />
+    <TypeScriptCompile Include="wwwroot\src\TextureTools.ts" />
     <TypeScriptCompile Include="wwwroot\src\Vector.ts" />
   </ItemGroup>
 </Project>

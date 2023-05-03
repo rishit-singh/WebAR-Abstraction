@@ -8,7 +8,9 @@ export class GlobalData
     public static DefaultTextureMaterialPath: string = "assets/";
 
     public static DefaultModelPath: string = "assets/models/";
-   
+  
+    public static DefaultTextureMaterialURL = "https://storage.googleapis.com/arusdz/textures/";
+    
     public static DefaultStorageServerURL = "https://storage.googleapis.com/arusdz/"; 
     
     public static DefaultTextureFileExtension: string =  ".jpg";

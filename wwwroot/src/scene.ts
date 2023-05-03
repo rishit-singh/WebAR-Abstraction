@@ -11,7 +11,8 @@ import {
   XRFrame,
   PlaneGeometry,
   MeshBasicMaterial,
-  TextureLoader
+  TextureLoader, 
+    ImageUtils
 } from "three";
 import {GlobalData} from "./global";
 
@@ -98,9 +99,22 @@ class Plane extends Object
      */
     protected SetTexture(filePath: string): MeshBasicMaterial
     {
-        return (this.Texture = new MeshBasicMaterial({
-            map: new TextureLoader().load(filePath)
+        let textureLoader = new TextureLoader();
+        
+        textureLoader.setCrossOrigin("anonymous");
+
+        // ImageUtils.crossOrigin = "";
+         
+        alert("Setting texture " + filePath);
+       
+        (this.Texture = new MeshBasicMaterial({
+            map: textureLoader.load(filePath)
         }));
+        
+        this.Texture.needsUpdate = true
+        ;
+        
+        return this.Texture;
     }
 
     public GetMesh(): Mesh
@@ -125,7 +139,6 @@ export function createScene(renderer: WebGLRenderer, textureID: string)
   
   let gestures: XRGestures = new XRGestures(renderer);
   
-  
   const camera = new PerspectiveCamera(
     70,
     window.innerWidth / window.innerHeight,
@@ -146,9 +159,13 @@ export function createScene(renderer: WebGLRenderer, textureID: string)
   //scene.add(planeMarker);
         
   const plane: Mesh = createPlaneMarker(); //new Plane(new Point2D(1 / 4, 1 / 4),"assets/rug.jpg").GeometryMesh;
+   
+   let path: string;
+    
+  var instance: Mesh = new Plane(new Point2D(1, 2), path = GlobalData.GetDefaultTextureMaterialPath(textureID)).GeometryMesh;
 
-  var instance: Mesh = new Plane(new Point2D(1, 2), GlobalData.GetDefaultTextureMaterialPath(textureID)).GeometryMesh;
-
+  alert(path);
+  
   instance.rotateX(-Math.PI / 2);
   instance.rotateZ(-Math.PI / 8);
   instance.translateY(-5);
