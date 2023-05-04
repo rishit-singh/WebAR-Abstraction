@@ -57,7 +57,7 @@ import {XRGestures} from "./XRGestures";
 
 GlobalData.DefaultDeviceInfo = GlobalData.GetDeviceInfo();
 
-alert(JSON.stringify(GlobalData.DefaultDeviceInfo));
+console.log(JSON.stringify(GlobalData.DefaultDeviceInfo));
 
 class Point2D
 {
@@ -105,7 +105,7 @@ class Plane extends Object
 
         // ImageUtils.crossOrigin = "";
          
-        alert("Setting texture " + filePath);
+        console.log("Setting texture " + filePath);
        
         (this.Texture = new MeshBasicMaterial({
             map: textureLoader.load(filePath)
@@ -138,7 +138,6 @@ export function createScene(renderer: WebGLRenderer, textureID: string)
   const scene = new Scene();
   
   let gestures: XRGestures = new XRGestures(renderer);
-  
   const camera = new PerspectiveCamera(
     70,
     window.innerWidth / window.innerHeight,
@@ -156,15 +155,15 @@ export function createScene(renderer: WebGLRenderer, textureID: string)
    */
   // const planeMarker: Mesh = new Plane(new Point2D(1, 1),"assets/rug.jpg").GeometryMesh;
   // planeMarker.rotateX(-Math.PI / 2);
-  //scene.add(planeMarker);
+      //scene.add(planeMarker);
         
   const plane: Mesh = createPlaneMarker(); //new Plane(new Point2D(1 / 4, 1 / 4),"assets/rug.jpg").GeometryMesh;
    
    let path: string;
     
-  var instance: Mesh = new Plane(new Point2D(1, 2), path = GlobalData.GetDefaultTextureMaterialPath(textureID)).GeometryMesh;
+  var instance: Mesh = new Plane(new Point2D(1, 1.5), path = GlobalData.GetDefaultTextureMaterialPath(textureID)).GeometryMesh;
 
-  alert(path);
+  console.log(path);
   
   instance.rotateX(-Math.PI / 2);
   instance.rotateZ(-Math.PI / 8);
@@ -187,7 +186,7 @@ export function createScene(renderer: WebGLRenderer, textureID: string)
    * */
     //@ts-ignore  
     gestures.addEventListener("rotate", (ev) => {
-        alert("rotate!"); 
+        console.log("rotate!"); 
     });
   
   function onSelect()

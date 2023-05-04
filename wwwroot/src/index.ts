@@ -36,13 +36,12 @@ function initializeXRApp(model: string) {
 
   button.click();
 
-    createScene(renderer, model);
+  createScene(renderer, model);
 };
 
 async function start() {
   const isImmersiveArSupported = await browserHasImmersiveArCompatibility();
     
-  
     let model: string = Tools.GetSubString(window.location.search, 1, window.location.search.length);
 
     if (GlobalData.DefaultDeviceInfo.DevicePlatform == Platform.iOS) {
@@ -66,10 +65,6 @@ async function start() {
         
         return;
     }
-
-    console.log("exists: " + (await fetch("https://storage.googleapis.com/arusdz/textures/21526.jpg")).statusText);
-    // console.log("!exists: " + (await fetch("assets/9.jpg")).statusText);
-
 
   GlobalData.DefaultDeviceInfo = GlobalData.GetDeviceInfo();
     

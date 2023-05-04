@@ -3,16 +3,16 @@ import {GlobalData} from "../global";
 
 /*  
  * Returns true if navigator has xr with 'immersive-ar' capabilities
- * Returns false otherwise.
- */
-export async function browserHasImmersiveArCompatibility(): Promise<boolean> {
-  // @ts-ignore
-  const isSupported: boolean = false;
-  //@ts-ignore
-  if (window.navigator.xr) {
-    // @ts-ignore
-    const isSupported: boolean = await navigator.xr.isSessionSupported(
-      "immersive-ar",
+    * Returns false otherwise.
+    */
+    export async function browserHasImmersiveArCompatibility(): Promise<boolean> {
+      // @ts-ignore
+      const isSupported: boolean = false;
+      //@ts-ignore
+      if (window.navigator.xr) {
+        // @ts-ignore
+        const isSupported: boolean = await navigator.xr.isSessionSupported(
+            "immersive-ar",
     );
     console.info(
       `[DEBUG] ${isSupported

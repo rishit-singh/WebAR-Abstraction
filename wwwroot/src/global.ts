@@ -9,7 +9,7 @@ export class GlobalData
 
     public static DefaultModelPath: string = "assets/models/";
   
-    public static DefaultTextureMaterialURL = "https://storage.googleapis.com/arusdz/textures/";
+    public static DefaultTextureMaterialURL = "http://144.202.95.203/textures/";
     
     public static DefaultStorageServerURL = "https://storage.googleapis.com/arusdz/"; 
     
@@ -19,7 +19,7 @@ export class GlobalData
     {
         //let objects: any[] = [ Tools.GetSubString(window.location.search, 1, window.location.search.length - 1) ];
 
-        return (GlobalData.DefaultTextureMaterialPath + textureName + GlobalData.DefaultTextureFileExtension);
+        return (GlobalData.DefaultTextureMaterialURL + textureName + GlobalData.DefaultTextureFileExtension);
     }
     
     public static GetDefaultModelPath(modelName: string): string
